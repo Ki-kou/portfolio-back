@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: "db"
+    image: mysql:8.0
+    restart: always
+    tty: true
+    ports:
+      - "3308:3306"
+    networks:
+      - api_network
+    env_file:
+      - .env.development
+
+  test-db:
+    container_name: "test-db"
+    image: mysql:8.0
+    restart: always
+    tty: true
+    ports:
+      - "3307:3306"
+    networks:
+      - api_network
+    env_file:
+      - .env.test
+
+  api:
+    container_name: "api"
+    depends_on:
+      - db
+    build: .
+    restart: always
+    tty: true
+    volumes:
+      - ./:/app:cached
+    ports:
+      - "8000:8000"
+    networks:
+      - api_network
+    command: poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+networks:
+  api_network:
+    name: api_network
+    driver: bridge

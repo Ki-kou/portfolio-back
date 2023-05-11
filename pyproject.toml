@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "portfolio-back"
+version = "0.1.0"
+description = ""
+authors = ["Ki-kou <aoikuma1234@gmail.com>"]
+readme = "README.md"
+packages = [{include = "portfolio_back"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.1"
+sqlalchemy = "^2.0.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
